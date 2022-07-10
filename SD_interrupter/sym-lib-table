@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "BH123A")(type "Legacy")(uri "${KIPRJMOD}/lib/BH123A/BH123A.lib")(options "")(descr ""))
+  (lib (name "IFE91A")(type "Legacy")(uri "${KIPRJMOD}/lib/IFE91A/IFE91A.lib")(options "")(descr ""))
+)
