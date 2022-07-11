@@ -1798,7 +1798,7 @@
     (fp_line (start 64.2 8.5) (end 64.2 22.5) (layer "F.SilkS") (width 0.12) (tstamp c2591a32-6cf2-4c0b-bc7a-e876659a289d))
     (fp_line (start 68 28) (end -5 28) (layer "F.SilkS") (width 0.12) (tstamp f5273e3e-c53d-458b-b022-f1625b2471c7))
     (fp_line (start -8.14 -2.64) (end -8.14 33.64) (layer "F.SilkS") (width 0.12) (tstamp fe6e2d62-cefe-49ae-b4f5-5edbddfa0d60))
-    (fp_arc (start 64.20104 22.49932) (mid 64.054473 22.853115) (end 63.70066 22.9997) (layer "F.SilkS") (width 0.12) (tstamp 14cd0c72-c014-454c-9546-1e50ec12a021))
+    (fp_arc (start 64.20104 22.49932) (mid 64.054479 22.85315) (end 63.70066 22.9997) (layer "F.SilkS") (width 0.12) (tstamp 14cd0c72-c014-454c-9546-1e50ec12a021))
     (fp_arc (start 0.20066 22.9997) (mid -0.153162 22.853142) (end -0.29972 22.49932) (layer "F.SilkS") (width 0.12) (tstamp 54bb5abf-22b1-4177-9d61-9210fe14ba07))
     (fp_arc (start 63.7 8) (mid 64.053553 8.146447) (end 64.2 8.5) (layer "F.SilkS") (width 0.12) (tstamp 7cd966f5-971b-43da-9526-16bb8993de4f))
     (fp_arc (start -0.29972 8.49884) (mid -0.153162 8.145018) (end 0.20066 7.99846) (layer "F.SilkS") (width 0.12) (tstamp 9b05603b-58a9-4eb2-986f-86ba284098d8))
@@ -2204,6 +2204,9 @@
   )
   (gr_text "Source: OneTesla" (at 40.64 88.646) (layer "B.SilkS") (tstamp e8cfa1a4-1309-4b26-bcff-a41bee523488)
     (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
+  )
+  (gr_text "JLCJLCJLCJLC" (at 30.48 90.678) (layer "F.SilkS") (tstamp 6e35611c-04d7-49c0-9110-da8143780ea5)
+    (effects (font (size 1 1) (thickness 0.125)))
   )
 
   (segment (start 32.850685 106.981315) (end 48.561315 106.981315) (width 0.635) (layer "B.Cu") (net 1) (tstamp 03615717-c6b8-4316-b713-65247ce5c2bd))
