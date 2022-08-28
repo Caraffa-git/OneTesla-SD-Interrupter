@@ -1,0 +1,31 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#(c) SnapEDA 2016 (snapeda.com)
+#This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA) with Design Exception 1.0
+#
+# IFE91A
+#
+DEF IFE91A U 0 40 Y Y 1 L N
+F0 "U" 0 0 50 H I L BNN
+F1 "IFE91A" 0 0 50 H I L BNN
+F2 "OPTO-TRANSMITTER" 0 0 50 H I L BNN
+F3 "" 0 0 50 H I L BNN
+DRAW
+P 2 0 0 10 0 0 -100 100 N
+P 2 0 0 10 -100 100 0 100 N
+P 2 0 0 10 0 100 100 100 N
+P 2 0 0 10 100 100 0 0 N
+P 2 0 0 10 0 0 -100 0 N
+P 2 0 0 10 0 0 100 0 N
+P 2 0 0 10 0 0 0 -100 N
+P 2 0 0 10 0 -100 -100 -100 N
+P 2 0 0 10 0 100 0 200 N
+P 2 0 0 10 0 200 -100 200 N
+T 0 -300 -300 50 0 0 0 Opto-Transmitter Normal 0 L B
+S -300 -200 200 300 0 0 10 f
+X A P$2 -500 200 200 R 40 40 0 0 B 
+X K P$1 -500 -100 200 R 40 40 0 0 B 
+ENDDRAW
+ENDDEF
+#
+# End Library
