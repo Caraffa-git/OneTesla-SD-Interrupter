@@ -28,7 +28,12 @@ sdsource *sd;
 char volindex, menuindex = 2;
 int ffreq = 20;
 
+unsigned int bfreq = 20;
+unsigned int boff = 100;
+unsigned int bon = 1;
+
 void fixedLoop();
+void burstLoop();
 void displayMenu();
 
 void setup() {
@@ -44,7 +49,7 @@ void setup() {
 void loop() {
   unsigned char key = get_key();
   if (key == btnDOWN) {
-    if (menuindex == 2) {
+    if (menuindex == 3) {
       menuindex = 0;
     } else {
       menuindex++;
@@ -76,6 +81,10 @@ void loop() {
       serialsource_run();
       lcd_printhome("Live Mode");
       delay(300);
+    } else if (menuindex == MENU_BURST) {
+      delay(150);
+      burstLoop();
+      delay(300);
     } else { // MENU_SDCARD
       delay(150);
       if (sd->valid) {
@@ -90,7 +99,7 @@ void loop() {
 
 void displayMenu()
 {
-  if (menuindex == 0) {
+  if (menuindex == MENU_SDCARD) {
     lcd_printhome("SD Card");
     lcd_setcursor(0, 1);
     if (sd->valid) {          
@@ -109,8 +118,10 @@ void displayMenu()
     } else {
       lcd_print((char *)sd->last_error);
     }
-  } else if (menuindex == 1) {
+  } else if (menuindex == MENU_LIVE) {
     lcd_printhome("Live Mode");
+  } else if (menuindex == MENU_BURST) {
+    lcd_printhome("Burst Mode");
   } else {
     lcd_printhome("Fixed Mode");
   }
@@ -196,6 +207,133 @@ void fixedLoop() {
     }
     delayMicroseconds(1000);
     elapsed += 1000;
+  }
+}
+
+void burstLoop() {
+  lcd_printhome("Base Freq: ");
+  lcd_printat(0, 1, bfreq);
+  lcd_print(" Hz");
+  int param = 0;
+  
+  note1->velocity = 127;
+  note1->on_time = get_on_time(bfreq);
+  setTimer1f(bfreq);
+  engageISR1();
+  
+  unsigned char state = 1;
+  
+  unsigned long last_t_k = millis();
+  unsigned long last_t_n = millis();
+  for (;;) {
+    unsigned long dt_k = millis() - last_t_k;
+    if (dt_k > 150) last_t_k = millis();
+    unsigned char key = btnNONE;
+    if (dt_k > 150) key = get_key();
+    
+    unsigned long dt_n = millis() - last_t_n;
+    unsigned long cap = state ? bon : boff;
+    if (dt_n > cap) {
+      if (state) {
+        disengageISR1();
+      } else {
+        engageISR1();
+      }
+      state = !state;
+      last_t_n = millis();
+    }
+    if (key == btnSELECT) {
+      param++;
+      if (param == 4) param = 0;
+      switch (param) {
+      case 0:
+        lcd_printhome("Base Freq: ");
+        lcd_printat(0, 1, bfreq);
+        lcd_print(" Hz");
+        break;
+      case 1:
+        lcd_printhome("Base Pwr: ");
+        lcd_setcursor(0, 1);
+        for (int i = 0; i < volindex; i++) {
+          lcd_print((char) (1));
+        }
+        break;
+      case 2:
+        lcd_printhome("Env ON:");
+        lcd_printat(0, 1, bon);
+        lcd_print(" mS");
+        break;
+      case 3:
+        lcd_printhome("Env OFF:");
+        lcd_printat(0, 1, boff);
+        lcd_print(" mS");
+        break;
+      default:
+        break;
+      }
+    } else if (key == btnUP) {
+      switch (param) {
+      case 0:
+        bfreq += 50;
+        if (bfreq > 1000) bfreq = 1000;
+        setTimer1f(bfreq);
+        lcd_clear();
+        lcd_printhome("Base Freq: ");
+        lcd_printat(0, 1, bfreq);
+        lcd_print(" Hz");
+        break;
+      case 1:
+        incvol(&lcd);
+        break;
+      case 2:
+        bon++;
+        if (bon > 500) bon = 500;
+        lcd_clear();
+        lcd_printhome("Env ON:");
+        lcd_printat(0, 1, bon);
+        lcd_print(" mS");
+        break;
+      case 3:
+        boff += 10;
+        lcd_clear();
+        lcd_printhome("Env OFF:");
+        lcd_printat(0, 1, boff);
+        lcd_print(" mS");
+        break;
+      default:
+        break;
+      }
+    } else if (key == btnDOWN) {
+      switch (param) {
+      case 0:
+        if (bfreq > 49) bfreq -= 50;
+        setTimer1f(bfreq);
+        lcd_clear();
+        lcd_printhome("Base Freq: ");
+        lcd_printat(0, 1, bfreq);
+        lcd_print(" Hz");
+        break;
+      case 1:
+        decvol(&lcd);
+        break;
+      case 2:
+        if (bon > 0) bon--;
+        lcd_clear();
+        lcd_printhome("Env ON:");
+        lcd_printat(0, 1, bon);
+        lcd_print(" mS");
+        break;
+      case 3:
+        if (boff > 9) boff -= 10;
+        lcd_clear();
+        lcd_printhome("Env OFF:");
+        lcd_printat(0, 1, boff);
+        lcd_print(" mS");
+        break;
+      default:
+        break;
+      }
+    }
   }
 }
 

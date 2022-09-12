@@ -83,6 +83,7 @@ static unsigned char arrow[8] = {~0x0f, ~0x07, ~0x03, ~0x01, ~0x03, ~0x07, ~0x0f
 #define MENU_SDCARD 0
 #define MENU_FIXED  2
 #define MENU_LIVE   1
+#define MENU_BURST 3
 
 #define __CONSTANTS_H
 #endif
